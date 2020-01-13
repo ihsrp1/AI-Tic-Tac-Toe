@@ -6,5 +6,5 @@ Good luck trying to beat it! ;)
 
 
 Especifications:
-Python version used: 3.6.9
+Python version used: 3.6.9  
 Pygame version used: 1.9.6
