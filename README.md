@@ -6,7 +6,7 @@ Good luck trying to beat it! ;)
 
 To run:  
 Go to the directory and type:  
-<em>python3 tictac.py<em>  
+<em>python3 tictac.py<\em>  
 Enjoy the game
 
 Especifications:  
