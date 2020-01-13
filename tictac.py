@@ -2,13 +2,54 @@ import sys
 import os
 import time
 import random
+import pygame
 
-def show_board(board):
+
+width = 640
+height = 480
+
+white = (255, 255, 255)
+
+def start_game(screen):
+    pygame.display.set_caption('Tic-Tac-Toe')
+    pygame.draw.line(screen, white, (255, 45), (255, 435), 3)
+    pygame.draw.line(screen, white, (385, 45), (385, 435), 3)
+    pygame.draw.line(screen, white, (125, 175), (515, 175), 3)
+    pygame.draw.line(screen, white, (125, 305), (515, 305), 3)
+    pygame.display.flip()
+
+def show_text(screen, text, x, y, font):
+    text = str(text)
+    text = font.render(text, True, white)
+    screen.blit(text, (x, y))
+
+def show_board(screen, font, board):
     for i in range(0, 9):
             if((i % 3) == 2):
                 print(board[i])
             else:
                 print(board[i], end='|')
+
+    if(board[0] != '_'):
+        show_text(screen, board[0], 150, 55, font)
+    if(board[1] != '_'):
+        show_text(screen, board[1], 280, 55, font)
+    if(board[2] != '_'):
+        show_text(screen, board[2], 410, 55, font)
+    if(board[3] != '_'):
+        show_text(screen, board[3], 150, 185, font)
+    if(board[4] != '_'):
+        show_text(screen, board[4], 280, 185, font)
+    if(board[5] != '_'):
+        show_text(screen, board[5], 410, 185, font)
+    if(board[6] != '_'):
+        show_text(screen, board[6], 150, 315, font)
+    if(board[7] != '_'):
+        show_text(screen, board[7], 280, 315, font)
+    if(board[8] != '_'):
+        show_text(screen, board[8], 410, 315, font)
+        
+        
 
 def check_winner(board):
     if(board[0] == board[1] == board[2] == 'X'):
@@ -80,7 +121,53 @@ def minimax(board, i):
         return bestScore
 
     
+def getBox(x, y):
+    if(x >= 125 and x < 254):
+        if(y >= 45 and y < 174):
+            return 0
+        elif(y > 176 and y < 304):
+            return 3
+        elif(y > 306 and y <= 435):
+            return 6
+    elif(x > 256 and x < 384):
+        if(y >= 45 and y < 174):
+            return 1
+        elif(y > 176 and y < 304):
+            return 4
+        elif(y > 306 and y <= 435):
+            return 7
+    elif(x > 386 and x <= 515):
+        if(y >= 45 and y < 174):
+            return 2
+        elif(y > 176 and y < 304):
+            return 5
+        elif(y > 306 and y <= 435):
+            return 8
+
+def wait_for_play():
+    x, y = 0, 0
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.display.quit()
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEMOTION:
+                mousex, mousey = event.pos
+            elif event.type == pygame.MOUSEBUTTONUP:
+                x, y = event.pos
+                return x, y
+
+
 def main():
+    pygame.init()
+    screen = pygame.display.set_mode((width, height))
+    playFont = pygame.font.SysFont('Helvetica', 100)
+    textFont = pygame.font.SysFont('Helvetica', 25)
+
+
+    start_game(screen)
+
     board = [
         '_', '_', '_',
         '_', '_', '_',
@@ -99,13 +186,23 @@ def main():
         
         if(i):
             print('O\'s turn')
+            text_turn = 'O\'s turn'
         else:
             print('X\'s turn')
+            text_turn = 'X\'s turn'
 
-        show_board(board)
+
+        text_points = 'Player: {}    |    Computer: {}    |    Tie: {}'.format(xPoints, oPoints, tiePoints)
+        screen = pygame.display.set_mode((width, height))
+        start_game(screen)
+        show_board(screen, playFont, board)
+        show_text(screen, text_points, 125, 0, textFont)
+        
 
         if(check_winner(board) == 'X'):
             print('X won!')
+            show_text(screen, 'X won!', 280, 436, textFont)
+            pygame.display.flip()
             xPoints+=1
             flagWin = True
             time.sleep(1)
@@ -116,6 +213,8 @@ def main():
             ]
         elif(check_winner(board) == 'O'):
             print('O won!')
+            show_text(screen, 'O won!', 280, 436, textFont)
+            pygame.display.flip()
             oPoints+=1
             flagWin = True
             time.sleep(1)
@@ -126,6 +225,8 @@ def main():
             ]
         elif(check_winner(board) == 'tie'):
             print('It\'s a tie!')
+            show_text(screen, 'It\'s a tie!', 270, 436, textFont)
+            pygame.display.flip()
             tiePoints+=1
             flagWin = True
             time.sleep(1)
@@ -134,6 +235,9 @@ def main():
                 '_', '_', '_',
                 '_', '_', '_'
             ]
+        else:
+            show_text(screen, text_turn, 280, 436, textFont)
+            pygame.display.flip()
 
 
         if not flagWin:
@@ -152,10 +256,12 @@ def main():
                             bestMove = j
                 board[bestMove] = 'O'
                 i = abs(i-1)
-            else:    
-                pos = int(input('Where would you like to play next: '))
-                if(board[pos-1] == '_'):
-                    board[pos-1] = 'X'
+            else:
+                x, y = wait_for_play()
+                move = getBox(x, y)
+                #move = int(input('Where would you like to play next: '))
+                if(board[move] == '_'):
+                    board[move] = 'X'
                     i = abs(i-1)
                 else:
                     print('Invalid move... :(')
