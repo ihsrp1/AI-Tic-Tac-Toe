@@ -86,12 +86,16 @@ def main():
         '_', '_', '_',
         '_', '_', '_'
     ]
+    xPoints = 0
+    oPoints = 0
+    tiePoints = 0
     i = 0
+    flagWin = False
     # 0 = X
     # 1 = O
     while 1:
         os.system('clear')
-
+        print('Player: {}    |    Computer: {}    |    Tie: {}' .format(xPoints, oPoints, tiePoints))
         
         if(i):
             print('O\'s turn')
@@ -102,39 +106,62 @@ def main():
 
         if(check_winner(board) == 'X'):
             print('X won!')
-            break
+            xPoints+=1
+            flagWin = True
+            time.sleep(1)
+            board = [
+                '_', '_', '_',
+                '_', '_', '_',
+                '_', '_', '_'
+            ]
         elif(check_winner(board) == 'O'):
             print('O won!')
-            break
+            oPoints+=1
+            flagWin = True
+            time.sleep(1)
+            board = [
+                '_', '_', '_',
+                '_', '_', '_',
+                '_', '_', '_'
+            ]
         elif(check_winner(board) == 'tie'):
             print('It\'s a tie!')
-            break
+            tiePoints+=1
+            flagWin = True
+            time.sleep(1)
+            board = [
+                '_', '_', '_',
+                '_', '_', '_',
+                '_', '_', '_'
+            ]
 
 
-
-        if(i):
-            bestScore = -9999
-            bestMove = 0
-            print('Hmmm...')
-            time.sleep(random.random())
-            for j in range(0, 9):
-                if(board[j] == '_'):
-                    board[j] = 'O'
-                    score = minimax(board, abs(i-1))
-                    board[j] = '_'
-                    if score > bestScore:
-                        bestScore = score
-                        bestMove = j
-            board[bestMove] = 'O'
-            i = abs(i-1)
-        else:    
-            pos = int(input('Where would you like to play next: '))
-            if(board[pos-1] == '_'):
-                board[pos-1] = 'X'
+        if not flagWin:
+            if(i):
+                bestScore = -9999
+                bestMove = 0
+                print('Hmmm...')
+                time.sleep(random.random())
+                for j in range(0, 9):
+                    if(board[j] == '_'):
+                        board[j] = 'O'
+                        score = minimax(board, abs(i-1))
+                        board[j] = '_'
+                        if score > bestScore:
+                            bestScore = score
+                            bestMove = j
+                board[bestMove] = 'O'
                 i = abs(i-1)
-            else:
-                print('Invalid move... :(')
-                time.sleep(1)
+            else:    
+                pos = int(input('Where would you like to play next: '))
+                if(board[pos-1] == '_'):
+                    board[pos-1] = 'X'
+                    i = abs(i-1)
+                else:
+                    print('Invalid move... :(')
+                    time.sleep(1)
+        else:
+            flagWin = False
 
         
         
