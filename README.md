@@ -1,2 +1,2 @@
 # AI-Tic-Tac-Toe
-An AI based Tic Tac Toe with Python (MinMax)
+A python tic-tac-toe game that plays based on a MinMax algorithm
