@@ -31,23 +31,23 @@ def show_board(screen, font, board):
                 print(board[i], end='|')
 
     if(board[0] != '_'):
-        show_text(screen, board[0], 157, 55, font)
+        show_text(screen, board[0], 156, 55, font)
     if(board[1] != '_'):
-        show_text(screen, board[1], 287, 55, font)
+        show_text(screen, board[1], 286, 55, font)
     if(board[2] != '_'):
-        show_text(screen, board[2], 417, 55, font)
+        show_text(screen, board[2], 416, 55, font)
     if(board[3] != '_'):
-        show_text(screen, board[3], 157, 185, font)
+        show_text(screen, board[3], 156, 185, font)
     if(board[4] != '_'):
-        show_text(screen, board[4], 287, 185, font)
+        show_text(screen, board[4], 286, 185, font)
     if(board[5] != '_'):
-        show_text(screen, board[5], 417, 185, font)
+        show_text(screen, board[5], 416, 185, font)
     if(board[6] != '_'):
-        show_text(screen, board[6], 157, 315, font)
+        show_text(screen, board[6], 156, 315, font)
     if(board[7] != '_'):
-        show_text(screen, board[7], 287, 315, font)
+        show_text(screen, board[7], 286, 315, font)
     if(board[8] != '_'):
-        show_text(screen, board[8], 417, 315, font)
+        show_text(screen, board[8], 416, 315, font)
         
         
 
@@ -143,6 +143,8 @@ def getBox(x, y):
             return 5
         elif(y > 306 and y <= 435):
             return 8
+
+    return -1
 
 def wait_for_play():
     x, y = 0, 0
@@ -260,12 +262,13 @@ def main():
                 x, y = wait_for_play()
                 move = getBox(x, y)
                 #move = int(input('Where would you like to play next: '))
-                if(board[move] == '_'):
-                    board[move] = 'X'
-                    i = abs(i-1)
-                else:
-                    print('Invalid move... :(')
-                    time.sleep(1)
+                if(move != -1):
+                    if(board[move] == '_'):
+                        board[move] = 'X'
+                        i = abs(i-1)
+                    else:
+                        print('Invalid move... :(')
+                        time.sleep(1)
         else:
             flagWin = False
 
