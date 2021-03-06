@@ -91,7 +91,7 @@ def check_winner(board):
     else:
         return 'tie'
     
-def minimax(board, i):
+def minimax(board, i, alpha, beta):
     result = check_winner(board)
     if(result == 'X'):
         return -10
@@ -106,18 +106,24 @@ def minimax(board, i):
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'O'
-                score = minimax(board, abs(i-1))
+                score = minimax(board, abs(i-1), alpha, beta)
                 board[j] = '_'
                 bestScore = max(score, bestScore)
+                alpha = max(score, alpha)
+                if beta <= alpha:
+                    break
         return bestScore
     else:
         bestScore = 9999
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'X'
-                score = minimax(board, abs(i-1))
+                score = minimax(board, abs(i-1), alpha, beta)
                 board[j] = '_'
                 bestScore = min(score, bestScore)
+                beta = min(score, beta)
+                if beta <= alpha:
+                    break
         return bestScore
 
     
@@ -251,7 +257,7 @@ def main():
                 for j in range(0, 9):
                     if(board[j] == '_'):
                         board[j] = 'O'
-                        score = minimax(board, abs(i-1))
+                        score = minimax(board, abs(i-1), -9999, 9999)
                         board[j] = '_'
                         if score > bestScore:
                             bestScore = score
