@@ -4,13 +4,28 @@ import time
 import random
 import pygame
 
-
 width = 640
 height = 480
-
+screen_coords = {
+    0: (156, 55),
+    1: (286, 55),
+    2: (416, 55),
+    3: (156, 185),
+    4: (286, 185),
+    5: (416, 185),
+    6: (156, 315),
+    7: (286, 315,),
+    8: (416, 315)
+}
 white = (255, 255, 255)
+red = (255, 0, 0)
+pygame.init()
+playFont = pygame.font.SysFont('Helvetica', 100)
+textFont = pygame.font.SysFont('Helvetica', 25)
+screen = pygame.display.set_mode((width, height))
 
-def start_game(screen):
+
+def start_game():
     pygame.display.set_caption('Tic-Tac-Toe')
     pygame.draw.line(screen, white, (255, 45), (255, 435), 3)
     pygame.draw.line(screen, white, (385, 45), (385, 435), 3)
@@ -18,39 +33,17 @@ def start_game(screen):
     pygame.draw.line(screen, white, (125, 305), (515, 305), 3)
     pygame.display.flip()
 
-def show_text(screen, text, x, y, font):
+def show_text(text, x, y, font, color):
     text = str(text)
-    text = font.render(text, True, white)
+    text = font.render(text, True, color)
     screen.blit(text, (x, y))
-
-def show_board(screen, font, board):
-    for i in range(0, 9):
-            if((i % 3) == 2):
-                print(board[i])
-            else:
-                print(board[i], end='|')
-
-    if(board[0] != '_'):
-        show_text(screen, board[0], 156, 55, font)
-    if(board[1] != '_'):
-        show_text(screen, board[1], 286, 55, font)
-    if(board[2] != '_'):
-        show_text(screen, board[2], 416, 55, font)
-    if(board[3] != '_'):
-        show_text(screen, board[3], 156, 185, font)
-    if(board[4] != '_'):
-        show_text(screen, board[4], 286, 185, font)
-    if(board[5] != '_'):
-        show_text(screen, board[5], 416, 185, font)
-    if(board[6] != '_'):
-        show_text(screen, board[6], 156, 315, font)
-    if(board[7] != '_'):
-        show_text(screen, board[7], 286, 315, font)
-    if(board[8] != '_'):
-        show_text(screen, board[8], 416, 315, font)
-        
-        
-
+    
+def show_board(font, board):
+    for i in range(9):
+        if(board[i] != '_'):
+            x, y = screen_coords[i]
+            show_text(board[i], x, y, font, white)
+           
 def check_winner(board):
     if(board[0] == board[1] == board[2] == 'X'):
         return 'X'
@@ -90,26 +83,38 @@ def check_winner(board):
         return '_'
     else:
         return 'tie'
-    
+
+def printBoard(board):
+    for i in range(0, 9):
+        if((i % 3) == 2):
+            print(board[i])
+        else:
+            print(board[i], end='|')
+
 def minimax(board, i, alpha, beta):
     result = check_winner(board)
     if(result == 'X'):
-        return -10
+        return -1
     elif(result == 'O'):
-        return 10
+        return 1
     elif(result == 'tie'):
         return 0
     
+    # print(i)
     
     if(i):
         bestScore = -9999
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'O'
+                # printBoard(board)
+                # time.sleep(0.05)
                 score = minimax(board, abs(i-1), alpha, beta)
-                board[j] = '_'
+                # printBoard(board)
+                # time.sleep(0.05)
                 bestScore = max(score, bestScore)
                 alpha = max(score, alpha)
+                board[j] = '_'
                 if beta <= alpha:
                     break
         return bestScore
@@ -118,15 +123,18 @@ def minimax(board, i, alpha, beta):
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'X'
+                # printBoard(board)
+                # time.sleep(0.05)
                 score = minimax(board, abs(i-1), alpha, beta)
                 board[j] = '_'
+                # printBoard(board)
+                # time.sleep(0.05)
                 bestScore = min(score, bestScore)
                 beta = min(score, beta)
                 if beta <= alpha:
                     break
         return bestScore
 
-    
 def getBox(x, y):
     if(x >= 125 and x < 254):
         if(y >= 45 and y < 174):
@@ -166,15 +174,8 @@ def wait_for_play():
                 x, y = event.pos
                 return x, y
 
-
 def main():
-    pygame.init()
-    screen = pygame.display.set_mode((width, height))
-    playFont = pygame.font.SysFont('Helvetica', 100)
-    textFont = pygame.font.SysFont('Helvetica', 25)
-
-
-    start_game(screen)
+    start_game()
 
     board = [
         '_', '_', '_',
@@ -189,27 +190,16 @@ def main():
     # 0 = X
     # 1 = O
     while 1:
-        os.system('clear')
-        print('Player: {}    |    Computer: {}    |    Tie: {}' .format(xPoints, oPoints, tiePoints))
-        
-        if(i):
-            print('O\'s turn')
-            text_turn = 'O\'s turn'
-        else:
-            print('X\'s turn')
-            text_turn = 'X\'s turn'
-
-
         text_points = 'Player: {}    |    Computer: {}    |    Tie: {}'.format(xPoints, oPoints, tiePoints)
         screen = pygame.display.set_mode((width, height))
-        start_game(screen)
-        show_board(screen, playFont, board)
-        show_text(screen, text_points, 125, 0, textFont)
+        start_game()
+        show_board(playFont, board)
+        show_text(text_points, 125, 0, textFont, white)
         
 
         if(check_winner(board) == 'X'):
             print('X won!')
-            show_text(screen, 'X won!', 280, 436, textFont)
+            show_text('X won!', 280, 436, textFont, white)
             pygame.display.flip()
             xPoints+=1
             flagWin = True
@@ -221,7 +211,7 @@ def main():
             ]
         elif(check_winner(board) == 'O'):
             print('O won!')
-            show_text(screen, 'O won!', 280, 436, textFont)
+            show_text('O won!', 280, 436, textFont, white)
             pygame.display.flip()
             oPoints+=1
             flagWin = True
@@ -233,7 +223,7 @@ def main():
             ]
         elif(check_winner(board) == 'tie'):
             print('It\'s a tie!')
-            show_text(screen, 'It\'s a tie!', 270, 436, textFont)
+            show_text('It\'s a tie!', 270, 436, textFont, white)
             pygame.display.flip()
             tiePoints+=1
             flagWin = True
@@ -244,7 +234,7 @@ def main():
                 '_', '_', '_'
             ]
         else:
-            show_text(screen, text_turn, 280, 436, textFont)
+            show_text(('O\'s turn' if i == 1 else 'X\'s turn'), 280, 436, textFont, white)
             pygame.display.flip()
 
 
@@ -252,7 +242,7 @@ def main():
             if(i):
                 bestScore = -9999
                 bestMove = 0
-                print('Hmmm...')
+                # print('Hmmm...')
                 time.sleep(random.random())
                 for j in range(0, 9):
                     if(board[j] == '_'):
