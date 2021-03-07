@@ -1,5 +1,5 @@
 # AI-Tic-Tac-Toe
-A python tic-tac-toe game that plays based on a MinMax algorithm
+A python tic-tac-toe game that plays based on a MinMax and Alpha-Beta Pruning algorithm
 
 Use the mouse to play the game. Click on the position you want to play and wait for the computer to make it's move.
 Good luck trying to beat it! ;)
