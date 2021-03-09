@@ -23,7 +23,7 @@ pygame.init()
 playFont = pygame.font.SysFont('Helvetica', 100)
 textFont = pygame.font.SysFont('Helvetica', 25)
 screen = pygame.display.set_mode((width, height))
-
+total = 0
 
 def start_game():
     pygame.display.set_caption('Tic-Tac-Toe')
@@ -91,7 +91,9 @@ def printBoard(board):
         else:
             print(board[i], end='|')
 
-def minimax(board, i, alpha, beta):
+def minimax(board, i, alpha, beta, it):
+    global total
+    total += 1
     result = check_winner(board)
     if(result == 'X'):
         return -1
@@ -107,14 +109,18 @@ def minimax(board, i, alpha, beta):
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'O'
-                # printBoard(board)
-                # time.sleep(0.05)
-                score = minimax(board, abs(i-1), alpha, beta)
-                # printBoard(board)
-                # time.sleep(0.05)
+                if it < 7:
+                    os.system('clear')
+                    printBoard(board)
+                    time.sleep(1/(it**2))
+                score = minimax(board, abs(i-1), alpha, beta, it)
+                if it < 7:
+                    os.system('clear')
+                    printBoard(board)
+                    time.sleep(1/(it**2))
+                board[j] = '_'
                 bestScore = max(score, bestScore)
                 alpha = max(score, alpha)
-                board[j] = '_'
                 if beta <= alpha:
                     break
         return bestScore
@@ -123,12 +129,16 @@ def minimax(board, i, alpha, beta):
         for j in range(0, 9):
             if(board[j] == '_'):
                 board[j] = 'X'
-                # printBoard(board)
-                # time.sleep(0.05)
-                score = minimax(board, abs(i-1), alpha, beta)
+                if it < 7:
+                    os.system('clear')
+                    printBoard(board)
+                    time.sleep(1/(it**2))
+                score = minimax(board, abs(i-1), alpha, beta, it)
                 board[j] = '_'
-                # printBoard(board)
-                # time.sleep(0.05)
+                if it < 7:
+                    os.system('clear')
+                    printBoard(board)
+                    time.sleep(1/(it**2))
                 bestScore = min(score, bestScore)
                 beta = min(score, beta)
                 if beta <= alpha:
@@ -175,6 +185,8 @@ def wait_for_play():
                 return x, y
 
 def main():
+    global total
+    total = 0
     start_game()
 
     board = [
@@ -244,10 +256,11 @@ def main():
                 bestMove = 0
                 # print('Hmmm...')
                 time.sleep(random.random())
+                it = board.count('_')
                 for j in range(0, 9):
                     if(board[j] == '_'):
                         board[j] = 'O'
-                        score = minimax(board, abs(i-1), -9999, 9999)
+                        score = minimax(board, abs(i-1), -9999, 9999, it)
                         board[j] = '_'
                         if score > bestScore:
                             bestScore = score
@@ -267,7 +280,8 @@ def main():
                         time.sleep(1)
         else:
             flagWin = False
-
+        print(total)
+        total = 0
         
         
 
