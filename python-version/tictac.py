@@ -104,7 +104,7 @@ def minimax(board, i, alpha, beta, it):
     
     # print(i)
     
-    if(i):
+    if(i): # MAX
         bestScore = -9999
         for j in range(0, 9):
             if(board[j] == '_'):
@@ -124,7 +124,7 @@ def minimax(board, i, alpha, beta, it):
                 if beta <= alpha:
                     break
         return bestScore
-    else:
+    else: # MIN
         bestScore = 9999
         for j in range(0, 9):
             if(board[j] == '_'):
@@ -281,6 +281,7 @@ def main():
         else:
             flagWin = False
         print(total)
+        # time.sleep(1)
         total = 0
         
         
