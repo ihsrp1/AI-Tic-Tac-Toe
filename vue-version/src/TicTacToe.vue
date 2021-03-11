@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%;">
+  <div style="width: 100%; margin-top: 350px;">
     <div class="heading">
       <h1>Tic-Tac-Toe</h1>
     </div>
@@ -15,9 +15,11 @@
         {{ gameOverText }}
       </div>
     </div>
-    <input type="button" @click="zoom(1)" value="Zoom +"/>
-    <input type="button" @click="zoom(2)" value="1:1"/>
-    <input type="button" @click="zoom(0)" value="Zoom -"/>
+    <div style="width: 100%; text-align: center;margin-top: 50px;">
+      <input type="button" @click="zoom(1)" value="Zoom +"/>
+      <input type="button" @click="zoom(2)" value="1:1"/>
+      <input type="button" @click="zoom(0)" value="Zoom -"/>
+    </div>
     <vue-tree
       style="width: 100%; height: 600px;"
       :dataset="graph"
@@ -126,7 +128,7 @@
           let move = moves[i];
           let newBoard = board.clone();
           newBoard.doMove(move.x, move.y, player);
-          if(depth <= 2){
+          if(depth <= 3){
             var newChild = {value: bestScore.toString(), children: []};
             parent.children.push(newChild);
           } else {
@@ -142,7 +144,6 @@
             bestScore = score;
             bestMove = move;
           }
-
           if (player === 'o') {
             alpha = Math.max(score, alpha);
           } else {
@@ -151,6 +152,7 @@
           if (beta <= alpha) {
             break;
           }
+
         }
 
         // Return the best found score & move!
@@ -199,7 +201,7 @@
 
   .heading {
     text-align: center;
-    width: 320px;
+    width: 100%;
     color: white;
   }
 </style>
