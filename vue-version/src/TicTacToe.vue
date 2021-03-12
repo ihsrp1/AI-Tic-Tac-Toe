@@ -15,10 +15,30 @@
         {{ gameOverText }}
       </div>
     </div>
+    <!-- <v-row style='height: 260px; position: relative;'>
+      <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
+        <TTTtest />
+      </v-col>
+      <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
+        <TTTtest />
+      </v-col>
+    </v-row> -->
     <div style="width: 100%; text-align: center;margin-top: 50px;">
-      <input type="button" @click="zoom(1)" value="Zoom +"/>
-      <input type="button" @click="zoom(2)" value="1:1"/>
-      <input type="button" @click="zoom(0)" value="Zoom -"/>
+      <button @click="zoom(0)" class='btnClass' style='background-color: #3f51b5; border-color: #3f51b5;' type="button">
+        <div class='btnContentClass'>
+          <span class='btnIconClass' aria-hidden="true">-</span>
+        </div>
+      </button>
+      <button @click="zoom(2)" class='btnClass' style='background-color: #3f51b5; border-color: #3f51b5;' type="button">
+        <div class='btnContentClass'>
+          <span class='btnIconClass' style='font-size: 20px;' aria-hidden="true">1:1</span>
+        </div>
+      </button>
+      <button @click="zoom(1)" class='btnClass' style='background-color: #3f51b5; border-color: #3f51b5;' type="button">
+        <div class='btnContentClass'>
+          <span class='btnIconClass' aria-hidden="true">+</span>
+        </div>
+      </button>
     </div>
     <vue-tree
       style="width: 100%; height: 600px;"
@@ -39,9 +59,12 @@
 <script>
   import Board from "./Board";
   import Dracula from "graphdracula";
+  import TTTtest from "../TicTacToetest"
 
   export default {
-
+    components: {
+      TTTtest
+    },
     data() { return {
       gameOver: false,
       gameOverText: '',
@@ -166,6 +189,78 @@
   }
 </script>
 <style>
+  .btnClass {
+    box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+    will-change: box-shadow;
+    min-width: 0;
+    height: 45px;
+    width: 45px;
+    padding: 0;
+    border-radius: 50%;
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: 14px;
+    font-weight: 500;
+    justify-content: center;
+    margin: 6px 8px;
+    outline: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: .3s cubic-bezier(.25,.8,.5,1),color 1ms;
+    position: relative;
+    vertical-align: middle;
+    user-select: none;
+    cursor: pointer;
+  }
+  .btnClass:before {
+    border-radius: inherit;
+    color: inherit;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    opacity: .12;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    width: 100%;
+  }
+  .btnContentClass {
+    flex: 1 1 auto;
+    margin: 0;
+    height: 100%;
+    align-items: center;
+    border-radius: inherit;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    white-space: nowrap;
+    width: inherit;
+  }
+  .btnIconClass {
+    color: inherit;
+    height: inherit;
+    width: inherit;
+    color: #fff !important;
+    align-items: center;
+    display: inline-flex;
+    font-feature-settings: "liga";
+    font-size: 24px;
+    justify-content: center;
+    line-height: 1;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    vertical-align: text-bottom;
+    font-family: 'Roboto';
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+  }
   .tictactoe-board {
     margin: 0 auto;
     display: flex;

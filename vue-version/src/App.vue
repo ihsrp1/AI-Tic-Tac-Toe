@@ -10,7 +10,7 @@
   }
   body, html {
     height: 100%;
-    background-color: rgb(10,78,100);
+    background: radial-gradient(#444, #53346d) !important;;
   }
   #app {
     display: flex;

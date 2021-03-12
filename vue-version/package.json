@@ -12,7 +12,9 @@
   "dependencies": {
     "@ssthouse/vue-tree-chart": "^0.4.4",
     "graphdracula": "^1.3.0",
-    "vue": "^2.5.11"
+    "raphael": "^2.3.0",
+    "vue": "^2.5.11",
+    "vuetify": "^2.4.6"
   },
   "browserslist": [
     "> 1%",
