@@ -183,7 +183,7 @@
           let move = moves[i];
           let newBoard = board.clone();
           newBoard.doMove(move.x, move.y, player);
-          if(depth <= 3){
+          if(depth <= 10 - moves.length){
             var newChild = {value: bestScore.toString(), boardCells: newBoard.cells, children: []};
             parent.children.push(newChild);
           } else {
