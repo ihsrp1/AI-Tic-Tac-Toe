@@ -6,6 +6,11 @@ import Cell from './Cell';
 
 import vuetify from './plugins/vuetify'
 
+// ES6
+import VueTyperPlugin from 'vue-typer'
+
+Vue.use(VueTyperPlugin)
+
 Vue.component('tic-tac-toe', TicTacToe);
 Vue.component('vue-tree', VueTree)
 Vue.component('cell', Cell);

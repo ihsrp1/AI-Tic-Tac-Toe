@@ -17,7 +17,7 @@
     </div> -->
     <v-row no-gutters class='GameRow' style='position: relative;'>
       <v-col v-if='$vuetify.breakpoint.smAndUp' xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
-        <BotBob :gameOver='gameOver' :gameOverText='gameOverText'/>
+        <BotBob :gameOver='gameOver' :gameOverText='gameOverText' :gameNotStarted='gameNotStarted'/>
       </v-col>
       <v-col xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
         <div class="container">
@@ -87,6 +87,7 @@
     data() { return {
       gameOver: false,
       gameOverText: '',
+      gameNotStarted: true,
       board: new Board(),
       graph: {},
       graphConfig: { nodeWidth: 120, nodeHeight: 80, levelHeight: 200 }
@@ -119,6 +120,7 @@
         return string;
       },
       performMove(x, y) {
+        this.gameNotStarted = false
         if (this.gameOver) {
           return;
         }

@@ -46,7 +46,44 @@
     </v-col>
     <v-col sm='6' md='4' style='padding: 0;'>
       <div class='SpeechBubble'>
-        <p :class='$vuetify.breakpoint.smOnly ? "smallScreenBuble" : ""'>{{ BobText }}</p>
+        <p :class='$vuetify.breakpoint.smOnly ? "smallScreenBuble" : ""'>
+          <vue-typer
+            v-if='gameNotStarted'
+            :text='[BobWelcomeText, BobPressToPlayText]'
+            :repeat='0'
+            initial-action='typing'
+            :pre-type-delay='70'
+            :type-delay='70'
+            :pre-erase-delay='3500'
+            :erase-delay='250'
+            erase-style='clear'
+            caret-animation='solid'
+          ></vue-typer>
+          <vue-typer
+            v-else-if='!gameOver'
+            :text="BobCheckTree"
+            :repeat='0'
+            initial-action='typing'
+            :pre-type-delay='70'
+            :type-delay='70'
+            :pre-erase-delay='3500'
+            :erase-delay='250'
+            erase-style='clear'
+            caret-animation='solid'
+          ></vue-typer>
+          <vue-typer
+            v-else
+            :text="gameOverText === 'Draw' ? `It's a draw!` : gameOverText"
+            :repeat='0'
+            initial-action='typing'
+            :pre-type-delay='70'
+            :type-delay='70'
+            :pre-erase-delay='3100'
+            :erase-delay='250'
+            erase-style='clear'
+            caret-animation='solid'
+          ></vue-typer>
+        </p>
       </div>
     </v-col>
   </v-row>
@@ -54,10 +91,12 @@
 
 <script>
 export default {
-  props: ["gameOver", "gameOverText"],
+  props: ["gameOver", "gameOverText", "gameNotStarted"],
   data() {
     return {
-      BobText: "Hello, I'm Bob\n and I will beat you!"
+      BobWelcomeText: "Hello, I'm Bob\nand you can't beat me!",
+      BobPressToPlayText: "Place your mark in a\nposition to start...",
+      BobCheckTree: "You can check my tree of possibilities \nbelow."
     } 
   },
 }
@@ -89,7 +128,7 @@ export default {
   position: absolute;
   width: 0;
   height: 0;
-  bottom: 65%;
+  bottom: 55%;
   left: -11px;
   border-top: 0.75rem solid transparent;
   border-bottom: 0.75rem solid transparent;
@@ -113,6 +152,10 @@ export default {
   content: '';
   position: absolute;
   top: 50%; left: 50%;
+}
+
+.vue-typer .custom.caret {
+  display: none;
 }
 
 .eye {
