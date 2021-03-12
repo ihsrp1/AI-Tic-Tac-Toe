@@ -16,10 +16,10 @@
       </div>
     </div> -->
     <v-row no-gutters class='GameRow' style='position: relative;'>
-      <v-col cols='6' align-self='center' style='position: relative;'>
+      <v-col v-if='$vuetify.breakpoint.smAndUp' xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
         <BotBob :gameOver='gameOver' :gameOverText='gameOverText'/>
       </v-col>
-      <v-col cols='6' align-self='center' style='position: relative;'>
+      <v-col xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
         <div class="container">
           <div v-for="(n, i) in 3" :key="i" class="TTTflex">
             <div v-for="(n, j) in 3" :key="j" class="cube">
