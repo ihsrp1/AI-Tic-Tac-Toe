@@ -19,7 +19,7 @@
       <v-col v-if='$vuetify.breakpoint.smAndUp' xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
         <BotBob :gameOver='gameOver' :gameOverText='gameOverText' :gameNotStarted='gameNotStarted'/>
       </v-col>
-      <v-col xs='12' sm='12' md='6' align-self='center' style='position: relative;'>
+      <v-col xs='12' sm='12' md='6' align-self='center' style='position: relative; height: 264px;'>
         <div class="container">
           <div v-for="(n, i) in 3" :key="i" class="TTTflex">
             <div v-for="(n, j) in 3" :key="j" class="cube">
@@ -64,11 +64,19 @@
           ref="tree"
         >
           <template v-slot:node="{ node, collapsed }">
-            <span
+            <div
               class="tree-node"
               :style="{ border: collapsed ? '2px solid grey' : '' }"
-              >{{ node.value }}</span
-            >
+              >
+              <div style='height: 80px; background: white; border-top-left-radius: 4px; border-top-right-radius: 4px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;'>
+                <div v-for="(n, i) in 3" :key="i">
+                  <div v-for="(n, j) in 3" :key="j" style='border: 1px solid black;'>
+                    <div style='height: 20px; width: 20px; color: black;'>{{node.boardCells ? node.boardCells[i][j] : board.cells[i][j]}}</div>
+                  </div>
+                </div>
+              </div>
+              <span>{{ node.value }}</span>
+            </div>
           </template>
         </vue-tree>
       </div>
@@ -130,6 +138,8 @@
           return;
         }
 
+        let newBoard = this.board.clone();
+
         this.$forceUpdate();
 
         if (this.board.isGameOver()) {
@@ -138,7 +148,7 @@
           return;
         }
 
-        this.graph = {value: '0', children: []};
+        this.graph = {value: '0', boardCells: newBoard.cells, children: []};
         // this.graph.addEdge(this.board.clone().toString(), '')
 
         let aiMove = this.minimax(this.board.clone(), 'o', this.graph, -Infinity, Infinity);
@@ -174,7 +184,7 @@
           let newBoard = board.clone();
           newBoard.doMove(move.x, move.y, player);
           if(depth <= 3){
-            var newChild = {value: bestScore.toString(), children: []};
+            var newChild = {value: bestScore.toString(), boardCells: newBoard.cells, children: []};
             parent.children.push(newChild);
           } else {
             var newChild = parent
@@ -191,6 +201,7 @@
           }
           
           parent.value = bestScore
+          // parent.board_cells = bestMove
           if (player === 'o') {
             alpha = Math.max(score, alpha);
           } else {
@@ -201,7 +212,6 @@
           }
 
         }
-
         // Return the best found score & move!
         return {
           score: bestScore,
@@ -335,13 +345,16 @@
   }
 
   .tree-node {
-    display: inline-block;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: antiquewhite;
     text-align: center;
-    line-height: 28px;
+    width: 80px;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-center;
+    justify-content: center;
+    color: white;
+    background-color: #f7c616;
+    border-radius: 4px;
   }
 
   .game-over-text {
