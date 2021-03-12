@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; margin-top: 350px;">
+  <div class="BodyContainer">
     <div class="heading">
       <h1>Tic-Tac-Toe</h1>
     </div>
@@ -15,11 +15,11 @@
         {{ gameOverText }}
       </div>
     </div> -->
-    <v-row style='height: 260px; position: relative;'>
-      <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
-        <TTTtest/>
+    <v-row no-gutters class='GameRow' style='position: relative;'>
+      <v-col cols='6' align-self='center' style='position: relative;'>
+        <BotBob :gameOver='gameOver' :gameOverText='gameOverText'/>
       </v-col>
-      <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
+      <v-col cols='6' align-self='center' style='position: relative;'>
         <div class="container">
           <div v-for="(n, i) in 3" :key="i" class="TTTflex">
             <div v-for="(n, j) in 3" :key="j" class="cube">
@@ -36,12 +36,9 @@
             </div>
           </div>
         </div>
-        <div class="game-over-text" v-if="gameOver">
-          {{ gameOverText }}
-        </div>
       </v-col>
     </v-row>
-    <div style="width: 100%; text-align: center;margin-top: 50px;">
+    <div class='ButtonRow'>
       <button @click="zoom(0)" class='btnClass' style='background-color: #3f51b5; border-color: #3f51b5;' type="button">
         <div class='btnContentClass'>
           <span class='btnIconClass' aria-hidden="true">-</span>
@@ -58,30 +55,34 @@
         </div>
       </button>
     </div>
-    <vue-tree
-      style="width: 100%; height: 600px;"
-      :dataset="graph"
-      :config="graphConfig"
-      ref="tree"
-    >
-      <template v-slot:node="{ node, collapsed }">
-        <span
-          class="tree-node"
-          :style="{ border: collapsed ? '2px solid grey' : '' }"
-          >{{ node.value }}</span
+    <div class='TreeRow'>
+      <div class='shape-outer'>
+        <vue-tree
+          class='shape-inner'
+          :dataset="graph"
+          :config="graphConfig"
+          ref="tree"
         >
-      </template>
-    </vue-tree>
+          <template v-slot:node="{ node, collapsed }">
+            <span
+              class="tree-node"
+              :style="{ border: collapsed ? '2px solid grey' : '' }"
+              >{{ node.value }}</span
+            >
+          </template>
+        </vue-tree>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   import Board from "./Board";
   import Dracula from "graphdracula";
-  import TTTtest from "../TicTacToetest"
+  import BotBob from "../src/components/BotBob"
 
   export default {
     components: {
-      TTTtest
+      BotBob
     },
     data() { return {
       gameOver: false,
@@ -210,6 +211,41 @@
   }
 </script>
 <style>
+  .BodyContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+  .GameRow {
+    flex: 0 1 264px;
+  }
+  .ButtonRow {
+    width: 100%;
+    text-align: center;
+    margin-top: 2vh;
+    flex: 0 1 auto;
+  }
+  .TreeRow {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 10px;
+  }
+  .shape-outer {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to bottom right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(32, 58, 67));
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .shape-inner {	
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(circle at center, #222, #000);;
+    background-size: cover;
+    margin: auto;
+  }
   .btnClass {
     box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
     will-change: box-shadow;
@@ -319,6 +355,9 @@
     text-align: center;
     width: 100%;
     color: white;
+    margin-top: 50px;
+    margin-bottom: 4vh;
+    flex: 0 1 auto;
   }
 
   /* Classes TicTacToe animation */
