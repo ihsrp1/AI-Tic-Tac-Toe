@@ -3,7 +3,7 @@
     <div class="heading">
       <h1>Tic-Tac-Toe</h1>
     </div>
-    <div class="tictactoe-board">
+    <!-- <div class="tictactoe-board">
       <div v-for="(n, i) in 3" :key="i">
         <div v-for="(n, j) in 3" :key="j">
           <cell @click="performMove(j, i)"
@@ -14,15 +14,33 @@
       <div class="game-over-text" v-if="gameOver">
         {{ gameOverText }}
       </div>
-    </div>
-    <!-- <v-row style='height: 260px; position: relative;'>
+    </div> -->
+    <v-row style='height: 260px; position: relative;'>
       <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
-        <TTTtest />
+        <TTTtest/>
       </v-col>
       <v-col cols='6' align-self='center' style='height: 260px; position: relative;'>
-        <TTTtest />
+        <div class="container">
+          <div v-for="(n, i) in 3" :key="i" class="TTTflex">
+            <div v-for="(n, j) in 3" :key="j" class="cube">
+              <div class="wall front">
+                <cell @click="performMove(j, i)"
+                  :value="board.cells[j][i]"
+                />
+              </div>
+              <div class="wall back"></div>
+              <div class="wall left"></div>
+              <div class="wall right"></div>
+              <div class="wall top"></div>
+              <div class="wall bottom"></div>
+            </div>
+          </div>
+        </div>
+        <div class="game-over-text" v-if="gameOver">
+          {{ gameOverText }}
+        </div>
       </v-col>
-    </v-row> -->
+    </v-row>
     <div style="width: 100%; text-align: center;margin-top: 50px;">
       <button @click="zoom(0)" class='btnClass' style='background-color: #3f51b5; border-color: #3f51b5;' type="button">
         <div class='btnContentClass'>
@@ -302,4 +320,175 @@
     width: 100%;
     color: white;
   }
+
+  /* Classes TicTacToe animation */
+
+  /* basic style */
+
+  .TTTflex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* cube */
+  .cell {
+    height: 80px !important;
+    width: 80px !important;
+    border: none !important;
+  }
+
+  .cube {
+    position: relative;
+    width: 1px;
+    height: 1px;
+    transform-style: preserve-3d;
+  }
+  .wall {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    text-align: center;
+    line-height: 100px;
+    left: calc(-80px / 2);
+    top: calc(-80px / 2);
+  }
+  .front {
+    transform: translateZ(calc(80px / 2));
+  }
+  .back {
+    transform: translateZ(calc(-80px / 2)) rotateY(180deg);
+  }
+  .right {
+    transform: translateX(calc(80px / 2)) rotateY(90deg);
+  }
+  .left {
+    transform: translateX(calc(-80px / 2)) rotateY(-90deg);
+  }
+  .top {
+    transform: translateY(calc(-80px / 2)) rotateX(90deg);
+  }
+  .bottom {
+    transform: translateY(calc(80px / 2)) rotateX(-90deg);
+  }
+
+  /* animation */
+
+  .TTTflex:nth-of-type(4) .cube:nth-of-type(1) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s forwards;
+  }
+
+  .TTTflex:nth-of-type(3) .cube:nth-of-type(1) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
+  }
+  .TTTflex:nth-of-type(4) .cube:nth-of-type(2) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
+  }
+
+  .TTTflex:nth-of-type(2) .cube:nth-of-type(1) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
+  }
+  .TTTflex:nth-of-type(3) .cube:nth-of-type(2) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
+  }
+  .TTTflex:nth-of-type(4) .cube:nth-of-type(3) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+  }
+
+  .TTTflex:nth-of-type(1) .cube:nth-of-type(1) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+  }
+  .TTTflex:nth-of-type(2) .cube:nth-of-type(2) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+  }
+  .TTTflex:nth-of-type(3) .cube:nth-of-type(3) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+  }
+  .TTTflex:nth-of-type(4) .cube:nth-of-type(4) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+  }
+
+  .TTTflex:nth-of-type(1) .cube:nth-of-type(2) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+  }
+  .TTTflex:nth-of-type(2) .cube:nth-of-type(3) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+  }
+  .TTTflex:nth-of-type(3) .cube:nth-of-type(4) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+  }
+
+  .TTTflex:nth-of-type(1) .cube:nth-of-type(3) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
+  }
+  .TTTflex:nth-of-type(2) .cube:nth-of-type(4) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
+  }
+
+  .TTTflex:nth-of-type(1) .cube:nth-of-type(4) {
+    animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1.1s forwards;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotateX(270deg) rotateY(270deg);
+      margin: 0 0px 0 0;
+    }
+    100% {
+      margin: 0 80px 0 0;
+    }
+  }
+
+  .wall{
+    animation: color 1s linear 0s forwards;
+  }
+
+  .TTTflex {
+    animation: size 1s linear 0s forwards;
+  }
+
+  .container {
+    animation: sizes 1s linear 0s forwards;
+  }
+
+  @keyframes sizes {
+    from {
+      padding-left: 80px;
+    }
+    to {
+      padding-left: 0px;
+    }
+  }
+
+  @keyframes size {
+    from {
+      width: 0px;
+      height: 0px;
+      margin: 0 0px 0 0;
+    }
+    to {
+      width: 80px;
+      height: 80px;
+      margin: 0 -80px 0 0;
+    }
+  }
+
+  @keyframes color {
+    0% {
+      background-color: #fff;
+      border: none;
+      border-radius: none;
+    }
+    70% {
+      background-color: rgba(255,255,255,0);
+      border: 2px solid rgb(233,233,233);
+      border-radius: 5px;
+    }
+    100% {
+      background-color: rgba(255,255,255,0);
+      border: 2px solid rgb(233,233,233);
+      border-radius: 5px;
+    }
+  }
+
 </style>

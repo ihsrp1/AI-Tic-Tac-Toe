@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="flex">
+        <div class="TTTflex">
             <div class="cube">
             <div class="wall front"></div>
             <div class="wall back"></div>
@@ -26,7 +26,7 @@
             <div class="wall bottom"></div>
             </div>
         </div>
-        <div class="flex">
+        <div class="TTTflex">
             <div class="cube">
             <div class="wall front"></div>
             <div class="wall back"></div>
@@ -52,7 +52,7 @@
             <div class="wall bottom"></div>
             </div>
         </div>
-        <div class="flex">
+        <div class="TTTflex">
             <div class="cube">
             <div class="wall front"></div>
             <div class="wall back"></div>
@@ -83,23 +83,8 @@
 
 <style scoped>
 /* basic style */
-html,
-body {
-  position: relative;
-  overflow: hidden;
-}
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background: radial-gradient(circle at center, #222, #000);
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-}
 
-.flex {
+.TTTflex {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,58 +127,58 @@ body {
 
 /* animation */
 
-.flex:nth-of-type(4) .cube:nth-of-type(1) {
+.TTTflex:nth-of-type(4) .cube:nth-of-type(1) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s forwards;
 }
 
-.flex:nth-of-type(3) .cube:nth-of-type(1) {
+.TTTflex:nth-of-type(3) .cube:nth-of-type(1) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
 }
-.flex:nth-of-type(4) .cube:nth-of-type(2) {
+.TTTflex:nth-of-type(4) .cube:nth-of-type(2) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
 }
 
-.flex:nth-of-type(2) .cube:nth-of-type(1) {
+.TTTflex:nth-of-type(2) .cube:nth-of-type(1) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
 }
-.flex:nth-of-type(3) .cube:nth-of-type(2) {
+.TTTflex:nth-of-type(3) .cube:nth-of-type(2) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
 }
-.flex:nth-of-type(4) .cube:nth-of-type(3) {
+.TTTflex:nth-of-type(4) .cube:nth-of-type(3) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
 }
 
-.flex:nth-of-type(1) .cube:nth-of-type(1) {
+.TTTflex:nth-of-type(1) .cube:nth-of-type(1) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
 }
-.flex:nth-of-type(2) .cube:nth-of-type(2) {
+.TTTflex:nth-of-type(2) .cube:nth-of-type(2) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
 }
-.flex:nth-of-type(3) .cube:nth-of-type(3) {
+.TTTflex:nth-of-type(3) .cube:nth-of-type(3) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
 }
-.flex:nth-of-type(4) .cube:nth-of-type(4) {
+.TTTflex:nth-of-type(4) .cube:nth-of-type(4) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
 }
 
-.flex:nth-of-type(1) .cube:nth-of-type(2) {
+.TTTflex:nth-of-type(1) .cube:nth-of-type(2) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
 }
-.flex:nth-of-type(2) .cube:nth-of-type(3) {
+.TTTflex:nth-of-type(2) .cube:nth-of-type(3) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
 }
-.flex:nth-of-type(3) .cube:nth-of-type(4) {
+.TTTflex:nth-of-type(3) .cube:nth-of-type(4) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
 }
 
-.flex:nth-of-type(1) .cube:nth-of-type(3) {
+.TTTflex:nth-of-type(1) .cube:nth-of-type(3) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
 }
-.flex:nth-of-type(2) .cube:nth-of-type(4) {
+.TTTflex:nth-of-type(2) .cube:nth-of-type(4) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
 }
 
-.flex:nth-of-type(1) .cube:nth-of-type(4) {
+.TTTflex:nth-of-type(1) .cube:nth-of-type(4) {
   animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1.1s forwards;
 }
 
@@ -211,7 +196,7 @@ body {
   animation: color 1s linear 0s forwards;
 }
 
-.flex {
+.TTTflex {
   animation: size 1s linear 0s forwards;
 }
 
