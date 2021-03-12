@@ -138,8 +138,6 @@
           return;
         }
 
-        let newBoard = this.board.clone();
-
         this.$forceUpdate();
 
         if (this.board.isGameOver()) {
@@ -148,12 +146,13 @@
           return;
         }
 
-        this.graph = {value: '0', boardCells: newBoard.cells, children: []};
+        this.graph = {value: '0', boardCells: this.board.cells, children: []};
         // this.graph.addEdge(this.board.clone().toString(), '')
 
         let aiMove = this.minimax(this.board.clone(), 'o', this.graph, -Infinity, Infinity);
         this.board.doMove(aiMove.move.x, aiMove.move.y, 'o');
         this.graph.value = aiMove.score
+        this.graph.boardCells = this.board.cells
 
         if (this.board.isGameOver()) {
           this.gameOver = true;
@@ -183,7 +182,7 @@
           let move = moves[i];
           let newBoard = board.clone();
           newBoard.doMove(move.x, move.y, player);
-          if(depth <= 10 - moves.length){
+          if(depth <= 9 - moves.length){
             var newChild = {value: bestScore.toString(), boardCells: newBoard.cells, children: []};
             parent.children.push(newChild);
           } else {
@@ -200,7 +199,8 @@
             bestMove = move;
           }
           
-          parent.value = bestScore
+          parent.value = (bestScore === -10000 || bestScore === 10000) ? board.getScore() : bestScore
+
           // parent.board_cells = bestMove
           if (player === 'o') {
             alpha = Math.max(score, alpha);
@@ -214,7 +214,7 @@
         }
         // Return the best found score & move!
         return {
-          score: bestScore,
+          score: (bestScore === -10000 || bestScore === 10000) ? board.getScore() : bestScore,
           move: bestMove
         }
       }
