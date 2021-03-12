@@ -122,6 +122,7 @@
 
         let aiMove = this.minimax(this.board.clone(), 'o', this.graph, -Infinity, Infinity);
         this.board.doMove(aiMove.move.x, aiMove.move.y, 'o');
+        this.graph.value = aiMove.score
 
         if (this.board.isGameOver()) {
           this.gameOver = true;
@@ -136,7 +137,7 @@
         // If the board has 3 in a row return the score of the board.
         if (board.isGameOver()) {
           return {
-            score: board.getScore() + depth,
+            score: board.getScore(),
             move: null
           }
         }
@@ -167,6 +168,8 @@
             bestScore = score;
             bestMove = move;
           }
+          
+          parent.value = bestScore
           if (player === 'o') {
             alpha = Math.max(score, alpha);
           } else {
