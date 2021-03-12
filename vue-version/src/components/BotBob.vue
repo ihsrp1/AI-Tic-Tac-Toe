@@ -94,9 +94,9 @@ export default {
   props: ["gameOver", "gameOverText", "gameNotStarted"],
   data() {
     return {
-      BobWelcomeText: "Hello, I'm Bob\nand you can't beat me!",
-      BobPressToPlayText: "Place your mark in a\nposition to start...",
-      BobCheckTree: "You can check my tree of possibilities \nbelow."
+      BobWelcomeText: "Hello, I'm Bob and you can't beat me!",
+      BobPressToPlayText: "Place your mark in a position to start...",
+      BobCheckTree: "You can check my tree of possibilities  below."
     } 
   },
 }
